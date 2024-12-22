@@ -1,0 +1,11 @@
+{
+  "name": "finaljsproject",
+  "version": "1.0.0",
+  "description": "This project is for learning purpose",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Samuel Boluwatife",
+  "license": "ISC"
+}
