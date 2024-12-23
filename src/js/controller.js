@@ -41,10 +41,18 @@ const spinnerLoader = function(parentEl){
 
 const showRecipe = async function () {
   try {
+    //extracting the hash or id from the url
+    const id = window.location.hash.slice(1);
+    console.log(id);
+
+    //when hash or id is not present
+    if(!id) return;
+
+    //rendering spinner loader
     spinnerLoader(recipeContainer);
 
     //loading api 
-    const res = await fetch("https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bc886?key=5a2c328d-104c-4bef-b072-c509c7e1ca5c");
+    const res = await fetch(`https://forkify-api.herokuapp.com/api/v2/recipes/${id}`);
 
     const data = await res.json();
     if (!res.ok) throw new Error(`${data.message} ${data.status}`);
@@ -165,7 +173,9 @@ const showRecipe = async function () {
   }
 }
 
-showRecipe();
+// showRecipe();
+window.addEventListener('hashchange', showRecipe);
+window.addEventListener('load', showRecipe);
 }
 
 // Export the main function or whatever you want to be accessible from outside
