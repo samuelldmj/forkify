@@ -22,6 +22,7 @@
     "electron-to-chromium": "^1.5.75",
     "escalade": "^3.2.0",
     "fill-range": "^7.1.1",
+    "fractional": "^1.0.0",
     "has-flag": "^4.0.0",
     "immutable": "^5.0.3",
     "is-extglob": "^2.1.1",
