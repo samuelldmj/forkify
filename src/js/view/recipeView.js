@@ -2,7 +2,7 @@ import icons from '../../img/icons.svg';
 // console.log(icons)
 
 import {Fraction} from 'fractional';
-console.log(Fraction)
+// console.log(Fraction)
 
 class RecipeView {
     #parentElement = document.querySelector('.recipe');
