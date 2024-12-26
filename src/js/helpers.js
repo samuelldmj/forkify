@@ -16,8 +16,8 @@ export const getJSON = async function(url){
         if (!res.ok) throw new Error(`${data.message} ${data.status}`);
 
         //testing the api calls
-        console.log("res =",res);
-        console.log("data = ", data);
+        // console.log("res =",res);
+        // console.log("data = ", data);
         return data;
     } catch(err){
         throw(err);
