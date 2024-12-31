@@ -10,14 +10,19 @@ import * as model from './model.js';
 //import views  class
 import recipeView from './view/recipeView.js';
 import searchView from './view/searchView.js';
+import resultsView from './view/resultsView.js';
+
+if(module.hot){
+  module.hot.accept();
+}
 
 
 function main() {
-  console.log("Main function executed from controller.");
+  // console.log("Main function executed from controller.");
   //application logic
 
 //rendering spinner
-recipeView.spinnerLoader();
+// recipeView.spinnerLoader();
 
 
 const controlRecipe = async function () {
@@ -37,6 +42,7 @@ const controlRecipe = async function () {
 
     //2) rendering api call
    recipeView.render(model.state.recipe);
+   console.log(model.state.recipe);
 
     
   } catch (err) {
@@ -50,11 +56,22 @@ const controlRecipe = async function () {
 
 const controlSearchResult = async function(){
   try {
+
+    //render spinner
+    resultsView.spinnerLoader();
+    console.log(resultsView);
+    
     const query = searchView.getQuery();
     if(!query) return;
 
+    //load search result
    await model.loadSearchResult(query);
+   
+
+   //render search result
+   resultsView.render(model.state.search.results);
    console.log(model.state.search.results);
+
   } catch (err) {
     console.error(err);
   }

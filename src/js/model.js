@@ -1,7 +1,6 @@
 //polyfilling async await
 import 'regenerator-runtime/runtime';
 
-
 import { APP_URL } from './config';
 import { getJSON } from './helpers';
 
@@ -19,9 +18,8 @@ export const loadRecipe = async function (id) {
 
     try {
 
-
         //loading api 
-        const data = await getJSON(`${APP_URL}/${id}`);
+        const data = await getJSON(`${APP_URL}${id}`);
 
         const { recipe } = data.data;
         state.recipe = {
