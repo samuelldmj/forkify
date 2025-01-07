@@ -8,9 +8,11 @@ class resultsView extends View {
     _errorMessage = "No recipe found for your query. Please Try again!!";
     _message = "";
     _generateMarkup() {
+      const id = window.location.hash.slice(1);
+
       return this._data.map(result => `
            <li class="preview">
-              <a class="preview__link preview__link--active" href="#${result.id}">
+              <a class="preview__link ${ result.id  === id ? 'preview__link--active' : ''}" href="#${result.id}">
                 <figure class="preview__fig">
                   <img src="${result.image}" alt="${result.title}" />
                 </figure>

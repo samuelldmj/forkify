@@ -36,6 +36,9 @@ function main() {
       // Render the spinner loader while fetching data
       recipeView.spinnerLoader();
 
+      // 0)
+      resultsView.updateRender(model.getSearchResultPage());
+
       // 1) Load the recipe data from the API using the extracted ID
       await model.loadRecipe(id);
 
@@ -64,8 +67,8 @@ function main() {
       // Load search results from the API based on the query
       await model.loadSearchResult(query);
       
-      // Render the search results for the current page (e.g., 4 results)
-      resultsView.render(model.getSearchResultPage(4));
+      // Render the search results for the current page
+      resultsView.render(model.getSearchResultPage());
       // console.log(model.state.search.results);
       console.log(model.state.search.results);
 
@@ -78,7 +81,7 @@ function main() {
     }
   }
 
-  // Function to control pagination (currently just logs a message)
+  // Function to control pagination
   const controlPagination = function(goToPage) {
 
     //render new result.
@@ -89,12 +92,23 @@ function main() {
     paginationView.render(model.state.search);
   }
 
+
+  const controlServings = function(newServings){
+    //update recipe servings in state.
+    model.updateServings(newServings);
+
+    //update recipe views
+    // recipeView.render(model.state.recipe);
+    recipeView.updateRender(model.state.recipe);
+
+  }
+
   // Event initializer to set up event handlers
   const init = function() {
-    // Add event handlers for rendering the recipe and searching
     recipeView.addHandlerRender(controlRecipe);
     searchView.addHandlerSearch(controlSearchResult);
     paginationView.addClickHandler(controlPagination);
+    recipeView.addHandlerUpdateServings(controlServings);
   }
 
   // Initialize the event handlers

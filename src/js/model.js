@@ -81,3 +81,12 @@ export const getSearchResultPage = function (currentPageNumber = state.search.cu
     // Return the sliced array of results for the current page
     return state.search.results.slice(start, end);
 }
+
+export const updateServings = function(newServings){
+        state.recipe.ingredients.forEach( ing => {
+            ing.quantity = (ing.quantity * newServings) / state.recipe.servings
+        });
+
+        //update the servings
+        state.recipe.servings = newServings;
+}
