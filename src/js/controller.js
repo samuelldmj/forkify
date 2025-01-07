@@ -44,7 +44,6 @@ function main() {
 
       // 2) Render the loaded recipe data
       recipeView.render(model.state.recipe);
-      console.log(model.state.recipe);
 
     } catch (err) {
       // Render an error message if the API call fails
@@ -70,7 +69,6 @@ function main() {
       // Render the search results for the current page
       resultsView.render(model.getSearchResultPage());
       // console.log(model.state.search.results);
-      console.log(model.state.search.results);
 
       // Render pagination controls based on the search results
       paginationView.render(model.state.search);
@@ -86,7 +84,7 @@ function main() {
 
     //render new result.
     resultsView.render(model.getSearchResultPage(goToPage));
-    console.log(model.state.search.results);
+    // console.log(model.state.search.results);
 
     // Render new pagination  button clicked.
     paginationView.render(model.state.search);
@@ -103,12 +101,24 @@ function main() {
 
   }
 
+  const controlBookmark = function(){
+    if(!model.state.recipe.bookmarked){ 
+      model.addBookmark(model.state.recipe)
+    } else {
+      model.deleteBookmark(model.state.recipe.id);
+    }
+     
+    console.log(model.state.recipe);
+    recipeView.updateRender(model.state.recipe);
+  }
+
   // Event initializer to set up event handlers
   const init = function() {
     recipeView.addHandlerRender(controlRecipe);
     searchView.addHandlerSearch(controlSearchResult);
     paginationView.addClickHandler(controlPagination);
     recipeView.addHandlerUpdateServings(controlServings);
+    recipeView.addHandlerAddBookmark(controlBookmark);
   }
 
   // Initialize the event handlers

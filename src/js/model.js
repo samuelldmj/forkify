@@ -12,8 +12,9 @@ export const state = {
         query: '', // Current search query
         results: [], // Array to store search results (recipes)
         resultsPerPage: RECIPE_PER_PAGE, // Number of results to display per page
-        currentPageNumber: 1 // Current page number for displaying results
+        currentPageNumber: 1, // Current page number for displaying results
     },
+    bookmark : []
 }
 
 // Function to load a recipe by its ID
@@ -35,6 +36,12 @@ export const loadRecipe = async function (id) {
             servings: recipe.servings,
             cookTime: recipe.cooking_time,
             ingredients: recipe.ingredients
+        }
+
+        if(state.bookmark.some(bookmark => bookmark.id === id)){
+            state.recipe.bookmarked = true;
+        }else {
+            state.recipe.bookmarked = false;
         }
     } catch (err) {
         // Throw an error if the API call fails
@@ -60,6 +67,7 @@ export const loadSearchResult = async function (query) {
                 image: rec.image_url
             }
         })
+        state.search.currentPageNumber = 1;
     } catch (err) {
         // Throw an error if the API call fails
         throw err;
@@ -76,7 +84,7 @@ export const getSearchResultPage = function (currentPageNumber = state.search.cu
     const end = currentPageNumber * state.search.resultsPerPage;
 
     // Log the start and end indices for debugging purposes
-    console.log(start, end);
+    // console.log(start, end);
 
     // Return the sliced array of results for the current page
     return state.search.results.slice(start, end);
@@ -89,4 +97,16 @@ export const updateServings = function(newServings){
 
         //update the servings
         state.recipe.servings = newServings;
+}
+
+export const addBookmark = function(recipe){
+    state.bookmark.push(recipe);
+    if(recipe.id === state.recipe.id) state.recipe.bookmarked = true;
+}
+
+export const deleteBookmark = function(id){
+    const index = state.bookmark.findIndex(el => el.id === id)
+    state.bookmark.splice(index, 1);
+
+    if(id === state.recipe.id) state.recipe.bookmarked = false;
 }

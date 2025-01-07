@@ -27,7 +27,7 @@ addClickHandler = function (handler) {
         // Calculate the total number of pages available for displaying recipes
         // based on the length of the results array and the number of results per page.
         const totalRecipePages = Math.ceil(this._data.results.length / this._data.resultsPerPage);
-        console.log(totalRecipePages);
+        // console.log(totalRecipePages);
         
         // Get the current active page number from the state.
         const activePage = this._data.currentPageNumber;
