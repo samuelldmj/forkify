@@ -12,6 +12,7 @@ import recipeView from './view/recipeView.js';
 import searchView from './view/searchView.js';
 import resultsView from './view/resultsView.js';
 import paginationView from './view/paginationView.js';
+import bookmarksView from './view/bookmarksView.js';
 
 // This helps keep the state of the page if any changes are made in the file.
 // Uncomment the following lines if using hot module replacement during development.
@@ -38,6 +39,7 @@ function main() {
 
       // 0)
       resultsView.updateRender(model.getSearchResultPage());
+      bookmarksView.updateRender(model.state.bookmark);
 
       // 1) Load the recipe data from the API using the extracted ID
       await model.loadRecipe(id);
@@ -110,6 +112,8 @@ function main() {
      
     console.log(model.state.recipe);
     recipeView.updateRender(model.state.recipe);
+
+    bookmarksView.render(model.state.bookmark);
   }
 
   // Event initializer to set up event handlers
