@@ -23,7 +23,7 @@ import bookmarksView from './view/bookmarksView.js';
 // Main function to control the application logic
 function main() {
   // console.log("Main function executed from controller.");
-  
+
   // Function to control the recipe loading and rendering
   const controlRecipe = async function () {
     try {
@@ -39,13 +39,17 @@ function main() {
 
       // 0)
       resultsView.updateRender(model.getSearchResultPage());
+
+      //1 update bookmark
       bookmarksView.updateRender(model.state.bookmark);
 
-      // 1) Load the recipe data from the API using the extracted ID
+      //2) Load the recipe data from the API using the extracted ID
       await model.loadRecipe(id);
 
-      // 2) Render the loaded recipe data
+      //3) Render the loaded recipe data
       recipeView.render(model.state.recipe);
+
+      
 
     } catch (err) {
       // Render an error message if the API call fails
@@ -54,12 +58,12 @@ function main() {
   }
 
   // Function to control the search results loading and rendering
-  const controlSearchResult = async function() {
+  const controlSearchResult = async function () {
     try {
       // Render the spinner loader while fetching search results
       resultsView.spinnerLoader();
       // console.log(resultsView);
-      
+
       // Get the search query from the search view
       const query = searchView.getQuery();
       // If no query is present, exit the function
@@ -67,7 +71,7 @@ function main() {
 
       // Load search results from the API based on the query
       await model.loadSearchResult(query);
-      
+
       // Render the search results for the current page
       resultsView.render(model.getSearchResultPage());
       // console.log(model.state.search.results);
@@ -82,7 +86,7 @@ function main() {
   }
 
   // Function to control pagination
-  const controlPagination = function(goToPage) {
+  const controlPagination = function (goToPage) {
 
     //render new result.
     resultsView.render(model.getSearchResultPage(goToPage));
@@ -93,7 +97,7 @@ function main() {
   }
 
 
-  const controlServings = function(newServings){
+  const controlServings = function (newServings) {
     //update recipe servings in state.
     model.updateServings(newServings);
 
@@ -103,26 +107,31 @@ function main() {
 
   }
 
-  const controlBookmark = function(){
-    if(!model.state.recipe.bookmarked){ 
+  const controlBookmark = function () {
+    if (!model.state.recipe.bookmarked) {
       model.addBookmark(model.state.recipe)
     } else {
       model.deleteBookmark(model.state.recipe.id);
     }
-     
+
     console.log(model.state.recipe);
     recipeView.updateRender(model.state.recipe);
 
     bookmarksView.render(model.state.bookmark);
   }
 
+  const controlManageBookmark = function(){
+      bookmarksView.render(model.state.bookmark);
+  }
+
   // Event initializer to set up event handlers
-  const init = function() {
+  const init = function () {
     recipeView.addHandlerRender(controlRecipe);
     searchView.addHandlerSearch(controlSearchResult);
     paginationView.addClickHandler(controlPagination);
     recipeView.addHandlerUpdateServings(controlServings);
     recipeView.addHandlerAddBookmark(controlBookmark);
+    bookmarksView.addBookmarkHandler(controlManageBookmark);
   }
 
   // Initialize the event handlers

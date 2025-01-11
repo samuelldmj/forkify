@@ -102,7 +102,10 @@ export const addBookmark = function (recipe) {
 
     // Mark the current recipe as bookmarked
     if (recipe.id === state.recipe.id) state.recipe.bookmarked = true;
+
+    persistBookmark();
 }
+
 
 // Function to delete a recipe from the bookmarks
 export const deleteBookmark = function (id) {
@@ -114,4 +117,24 @@ export const deleteBookmark = function (id) {
 
     // Update the bookmarked status of the current recipe if applicable
     if (id === state.recipe.id) state.recipe.bookmarked = false;
+
+    persistBookmark();
 }
+
+
+// saving bookmarks to local storage
+const persistBookmark = function () {
+    localStorage.setItem('bookmark', JSON.stringify(state.bookmark));
+}
+
+
+//getting bookmark from local storage
+const retrieveBookmark  = function(){
+    const storage  = localStorage.getItem('bookmark');
+    if(storage){
+        state.bookmark = JSON.parse(storage);
+    }
+
+}
+retrieveBookmark();
+
