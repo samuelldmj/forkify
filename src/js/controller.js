@@ -13,6 +13,7 @@ import searchView from './view/searchView.js';
 import resultsView from './view/resultsView.js';
 import paginationView from './view/paginationView.js';
 import bookmarksView from './view/bookmarksView.js';
+import addRecipeView from './view/addRecipeView.js';
 
 // This helps keep the state of the page if any changes are made in the file.
 // Uncomment the following lines if using hot module replacement during development.
@@ -49,7 +50,8 @@ function main() {
       //3) Render the loaded recipe data
       recipeView.render(model.state.recipe);
 
-      
+      //modal window
+      addRecipeView._addHandlerShowWindow();
 
     } catch (err) {
       // Render an error message if the API call fails
@@ -124,6 +126,10 @@ function main() {
       bookmarksView.render(model.state.bookmark);
   }
 
+  const controlAddRecipe = function(newRecipe){
+    console.log(newRecipe);
+  }
+
   // Event initializer to set up event handlers
   const init = function () {
     recipeView.addHandlerRender(controlRecipe);
@@ -132,6 +138,7 @@ function main() {
     recipeView.addHandlerUpdateServings(controlServings);
     recipeView.addHandlerAddBookmark(controlBookmark);
     bookmarksView.addBookmarkHandler(controlManageBookmark);
+    addRecipeView._addHandlerUpload(controlAddRecipe);
   }
 
   // Initialize the event handlers

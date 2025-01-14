@@ -103,9 +103,9 @@ export const addBookmark = function (recipe) {
     // Mark the current recipe as bookmarked
     if (recipe.id === state.recipe.id) state.recipe.bookmarked = true;
 
+    // Save bookmarks to localStorage
     persistBookmark();
 }
-
 
 // Function to delete a recipe from the bookmarks
 export const deleteBookmark = function (id) {
@@ -118,23 +118,26 @@ export const deleteBookmark = function (id) {
     // Update the bookmarked status of the current recipe if applicable
     if (id === state.recipe.id) state.recipe.bookmarked = false;
 
+    // Save updated bookmarks to localStorage
     persistBookmark();
 }
 
-
-// saving bookmarks to local storage
+// Function to save bookmarks to localStorage
 const persistBookmark = function () {
+    // Store the bookmark array in localStorage as a JSON string
     localStorage.setItem('bookmark', JSON.stringify(state.bookmark));
 }
 
+// Function to retrieve bookmarks from localStorage
+const retrieveBookmark = function () {
+    // Get the bookmarks data from localStorage
+    const storage = localStorage.getItem('bookmark');
 
-//getting bookmark from local storage
-const retrieveBookmark  = function(){
-    const storage  = localStorage.getItem('bookmark');
-    if(storage){
+    // If bookmarks exist, parse and store them in the application state
+    if (storage) {
         state.bookmark = JSON.parse(storage);
     }
-
 }
-retrieveBookmark();
 
+// Call the function to load bookmarks from localStorage when the app initializes
+retrieveBookmark();
